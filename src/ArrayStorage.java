@@ -19,10 +19,7 @@ public class ArrayStorage {
     Resume get(String uuid) {
         int storageIndex = 0;
         for (int i = 0; i < size(); i++) {
-            //storageIndex = storage[i].uuid.equals(uuid) ? i : 2;
-            if (storage[i].uuid.equals(uuid)) {
-                storageIndex = i;
-            }
+            if (storage[i].uuid.equals(uuid)) storageIndex = i;
         }
         return storage[storageIndex];
     }
