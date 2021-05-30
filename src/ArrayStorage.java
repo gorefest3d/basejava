@@ -19,7 +19,10 @@ public class ArrayStorage {
     Resume get(String uuid) {
         int storageIndex = 0;
         for (int i = 0; i < size(); i++) {
-            storageIndex = storage[i].uuid.equals(uuid) ? i : 0;
+            //storageIndex = storage[i].uuid.equals(uuid) ? i : 2;
+            if (storage[i].uuid.equals(uuid)) {
+                storageIndex = i;
+            }
         }
         return storage[storageIndex];
     }
@@ -42,14 +45,13 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     Resume[] getAll() {
-        Resume[] allResume = Arrays.copyOfRange(storage, 0, size());
-        return allResume;
+        return Arrays.copyOfRange(storage, 0, size());
     }
 
     int size() {
         int size = 0;
-        for (int i = 0; i < storage.length; i++) {
-            if (storage[i] != null) {
+        for (Resume resume : storage) {
+            if (resume != null) {
                 size++;
             }
         }
