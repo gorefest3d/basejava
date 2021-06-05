@@ -23,13 +23,33 @@ public class ArrayStorage {
         size++;
     }
 
-    public Resume get(String uuid) {
+    public void update(Resume r, String updateData) {
         for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(uuid)) {
-                return storage[i];
+            if (storage[i].getUuid().equals(r.getUuid())) {
+                storage[i].setUuid(updateData);
+                break;
+            }
+        }
+    }
+
+    public Resume get(String uuid) {
+        if (isExist(uuid)) {
+            for (int i = 0; i < size; i++) {
+                if (storage[i].getUuid().equals(uuid)) {
+                    return storage[i];
+                }
             }
         }
         return null;
+    }
+
+    private boolean isExist(String uuid) {
+        for (int i = 0; i < size; i++) {
+            if (storage[i].getUuid().equals(uuid)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void delete(String uuid) {
