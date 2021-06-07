@@ -9,58 +9,62 @@ import java.util.Arrays;
  */
 public class ArrayStorage {
     private int size;
+    private int index;
     private Resume[] storage = new Resume[10000];
 
     public void clear() {
-        for (int i = 0; i < size; i++) {
-            storage[i] = null;
-        }
+        Arrays.fill(storage, 0, size, null);
         size = 0;
-    }
-
-    public void save(Resume r) {
-        storage[size] = r;
-        size++;
-    }
-
-    public void update(Resume r, String updateData) {
-        for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(r.getUuid())) {
-                storage[i].setUuid(updateData);
-                break;
-            }
-        }
-    }
-
-    public Resume get(String uuid) {
-        if (isExist(uuid)) {
-            for (int i = 0; i < size; i++) {
-                if (storage[i].getUuid().equals(uuid)) {
-                    return storage[i];
-                }
-            }
-        }
-        return null;
     }
 
     private boolean isExist(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
+                index = i;
                 return true;
             }
         }
         return false;
     }
 
-    public void delete(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(uuid)) {
-                for (int j = i + 1; j < size; j++) {
-                    storage[j - 1] = storage[j];
-                }
-                size--;
-                break;
+    public void save(Resume r) {
+        if (size < storage.length) {
+            if (!isExist(r.getUuid())) {
+                storage[size] = r;
+                size++;
+            } else {
+                System.out.println("Такое резюме существует!");
             }
+        } else {
+            System.out.println("БД переполнена!");
+        }
+    }
+
+    public void update(Resume r, String updateData) {
+        if (isExist(r.getUuid())) {
+            storage[index].setUuid(updateData);
+        } else {
+            System.out.println("Это резюме нельзя обновить");
+        }
+    }
+
+    public Resume get(String uuid) {
+        if (isExist(uuid)) {
+            return storage[index];
+        } else {
+            System.out.println("Такого резюме нет в БД");
+        }
+        return null;
+    }
+
+    public void delete(String uuid) {
+        if (isExist(uuid)) {
+            for (int j = index + 1; j < size; j++) {
+                storage[j - 1] = storage[j];
+            }
+            size--;
+        } else {
+            System.out.println("Это резюме нельзя удалить");
         }
     }
 
