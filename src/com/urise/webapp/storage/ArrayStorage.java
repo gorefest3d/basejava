@@ -8,8 +8,9 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
+    private static final int STORAGE_LIMIT = 10_000;
     private int size;
-    private Resume[] storage = new Resume[10_000];
+    private Resume[] storage = new Resume[STORAGE_LIMIT];
 
     public void clear() {
         Arrays.fill(storage, 0, size, null);
@@ -17,7 +18,7 @@ public class ArrayStorage {
     }
 
     public void save(Resume resume) {
-        if (size < storage.length) {
+        if (size < STORAGE_LIMIT) {
             if (getIndex(resume.getUuid()) == -1) {
                 storage[size] = resume;
                 size++;
