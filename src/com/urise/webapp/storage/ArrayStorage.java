@@ -6,28 +6,9 @@ import com.urise.webapp.model.Resume;
  * Array based storage for Resumes
  */
 public class ArrayStorage extends AbstractArrayStorage {
-    public void save(Resume resume) {
-        if (size < STORAGE_LIMIT) {
-            if (getIndex(resume.getUuid()) == -1) {
-                storage[size] = resume;
-                size++;
-            } else {
-                System.out.println("Резюме " + resume.getUuid() + " существует!");
-            }
-        } else {
-            System.out.println("БД переполнена!");
-        }
-    }
-
-    public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index >= 0) {
-            if (size - (index + 1) >= 0)
-                System.arraycopy(storage, index + 1, storage, index + 1 - 1, size - (index + 1));
-            size--;
-        } else {
-            System.out.println("Резюме " + uuid + " нельзя удалить");
-        }
+    @Override
+    protected void insertResume(Resume resume, int index) {
+        storage[size] = resume;
     }
 
     protected int getIndex(String uuid) {
@@ -38,5 +19,10 @@ public class ArrayStorage extends AbstractArrayStorage {
             }
         }
         return index;
+    }
+
+    @Override
+    protected void fillAfterDelete(int index) {
+        System.arraycopy(storage, index + 1, storage, index + 1 - 1, size - (index + 1));
     }
 }
