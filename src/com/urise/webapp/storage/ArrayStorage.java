@@ -23,6 +23,6 @@ public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected void fillAfterDelete(int index) {
-        System.arraycopy(storage, index + 1, storage, index + 1 - 1, size - (index + 1));
+       System.arraycopy(storage, index + 1, storage, index - 1, size - (index + 1));
     }
 }

@@ -9,6 +9,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     protected void insertResume(Resume resume, int index) {
         int indexForInsert = -index - 1;
         System.arraycopy(storage, indexForInsert, storage, indexForInsert + 1, size - indexForInsert);
+        storage[indexForInsert] = resume;
     }
 
     @Override
@@ -20,7 +21,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected void fillAfterDelete(int index) {
-        int moveIndex = (size - index - 1);
+        int moveIndex = size - index - 1;
         if (moveIndex > 0) {
             System.arraycopy(storage, index + 1, storage, index, moveIndex);
         }
