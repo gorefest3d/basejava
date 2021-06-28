@@ -1,5 +1,8 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.exception.ExistStorageException;
+import com.urise.webapp.exception.NotExistStorageException;
+import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
 import java.util.Arrays;
@@ -32,10 +35,10 @@ public abstract class AbstractArrayStorage implements Storage {
                 insertResume(resume, index);
                 size++;
             } else {
-                System.out.println("Резюме " + resume.getUuid() + " существует!");
+                throw new ExistStorageException(resume.getUuid());
             }
         } else {
-            System.out.println("БД переполнена!");
+            throw new StorageException("БД переполнена", resume.getUuid());
         }
     }
 
@@ -44,7 +47,7 @@ public abstract class AbstractArrayStorage implements Storage {
         if (index >= 0) {
             storage[index] = resume;
         } else {
-            System.out.println("Резюме " + resume.getUuid() + " нельзя обновить");
+            throw new NotExistStorageException(resume.getUuid());
         }
     }
 
@@ -53,8 +56,7 @@ public abstract class AbstractArrayStorage implements Storage {
         if (index >= 0) {
             return storage[index];
         }
-        System.out.println("Резюме " + uuid + " нет в БД");
-        return null;
+        throw new NotExistStorageException(uuid);
     }
 
     public void delete(String uuid) {
@@ -64,7 +66,7 @@ public abstract class AbstractArrayStorage implements Storage {
                 fillAfterDelete(index);
             size--;
         } else {
-            System.out.println("Резюме " + uuid + " нельзя удалить");
+            throw new NotExistStorageException(uuid);
         }
     }
 
