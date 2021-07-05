@@ -38,11 +38,16 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void getAll() {
+        Resume[] testResume = new Resume[3];
+        testResume[0] = new Resume("uuid1");
+        testResume[1] = new Resume("uuid2");
+        testResume[2] = new Resume("uuid3");
         Resume[] resumes = storage.getAll();
-        Assert.assertEquals(3, resumes.length);
-        Assert.assertEquals(RESUME_1, resumes[0]);
-        Assert.assertEquals(RESUME_2, resumes[1]);
-        Assert.assertEquals(RESUME_3, resumes[2]);
+        Assert.assertArrayEquals(testResume, resumes);
+//        Assert.assertEquals(3, resumes.length);
+//        Assert.assertEquals(RESUME_1, resumes[0]);
+//        Assert.assertEquals(RESUME_2, resumes[1]);
+//        Assert.assertEquals(RESUME_3, resumes[2]);
     }
 
     @Test
@@ -70,7 +75,7 @@ public abstract class AbstractArrayStorageTest {
                 storage.save(new Resume());
             }
         } catch (StorageException e) {
-            Assert.fail();
+            Assert.fail("БД переполнена");
         }
         storage.save(new Resume());
     }
@@ -79,17 +84,12 @@ public abstract class AbstractArrayStorageTest {
     public void update() {
         Resume newResume = new Resume(UUID_1);
         storage.update(newResume);
-        Assert.assertTrue(newResume == storage.get(UUID_1));
+        Assert.assertSame(newResume, storage.get(UUID_1));
     }
 
     @Test(expected = NotExistStorageException.class)
     public void updateNotExist() throws Exception {
-        storage.get("dummy");
-    }
-
-    @Test(expected = NotExistStorageException.class)
-    public void getNotExist() {
-        storage.get("dummy");
+        storage.get("uuid4");
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -104,6 +104,11 @@ public abstract class AbstractArrayStorageTest {
         assertGetResume(RESUME_1);
         assertGetResume(RESUME_2);
         assertGetResume(RESUME_3);
+    }
+
+    @Test(expected = NotExistStorageException.class)
+    public void getNotExist() {
+        storage.get("dummy");
     }
 
     private void assertEqualsSize(int size) {
