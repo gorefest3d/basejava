@@ -38,13 +38,13 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void getAll() {
-        Resume[] testResume = new Resume[3];
-        testResume[0] = new Resume("uuid1");
-        testResume[1] = new Resume("uuid2");
-        testResume[2] = new Resume("uuid3");
-        Resume[] resumes = storage.getAll();
+        Resume[] expectedResumes = new Resume[3];
+        expectedResumes[0] = new Resume(UUID_1);
+        expectedResumes[1] = new Resume(UUID_2);
+        expectedResumes[2] = new Resume(UUID_3);
+        Resume[] actualResumes = storage.getAll();
 
-        Assert.assertArrayEquals(testResume, resumes);
+        Assert.assertArrayEquals(expectedResumes, actualResumes);
     }
 
     @Test
@@ -72,7 +72,7 @@ public abstract class AbstractArrayStorageTest {
                 storage.save(new Resume());
             }
         } catch (StorageException e) {
-            Assert.fail("БД переполнена");
+            Assert.fail("БД переполнена раньше времени");
         }
         storage.save(new Resume());
     }
@@ -86,7 +86,7 @@ public abstract class AbstractArrayStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void updateNotExist() throws Exception {
-        storage.get("uuid4");
+        storage.get(UUID_4);
     }
 
     @Test(expected = NotExistStorageException.class)
