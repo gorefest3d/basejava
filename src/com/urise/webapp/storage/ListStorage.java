@@ -5,50 +5,51 @@ import com.urise.webapp.model.Resume;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListStorage implements Storage {
-    List<Resume> resumeList = new ArrayList<>();
+public class ListStorage extends AbstractStorage {
+    private List<Resume> listResume = new ArrayList<>();
 
     @Override
-    public void clear() {
-        resumeList.clear();
+    protected void doSave(Resume resume, int searchKey) {
+        listResume.add(resume);
     }
 
     @Override
-    public void save(Resume resume) {
-        resumeList.add(resume);
-    }
-
-    @Override
-    public void update(Resume resume) {
-        resumeList.set(getIndex(resume.getUuid()), resume);
-    }
-
-    @Override
-    public Resume get(String uuid) {
-        return resumeList.get(getIndex(uuid));
-    }
-
-    public Integer getIndex(String uuid) {
-        for (int i = 0; i < resumeList.size(); i++) {
-            if (resumeList.get(i).getUuid().equals(uuid)) {
+    protected int getSearchKey(String uuid) {
+        for (int i = 0; i < listResume.size(); i++) {
+            if (listResume.get(i).getUuid().equals(uuid)) {
                 return i;
             }
         }
-        return null;
+        return 0;
     }
 
     @Override
-    public void delete(String uuid) {
-        resumeList.remove(getIndex(uuid));
+    protected void doUpdate(Resume resume, int searchKey) {
+        listResume.set(searchKey, resume);
+    }
+
+    @Override
+    protected Resume doGet(int searchKey) {
+        return listResume.get(searchKey);
+    }
+
+    @Override
+    protected void doDelete(int searchKey) {
+        listResume.remove(searchKey);
+    }
+
+    @Override
+    public void clear() {
+        listResume.clear();
     }
 
     @Override
     public Resume[] getAll() {
-        return resumeList.toArray(new Resume[resumeList.size()]);
+        return listResume.toArray(new Resume[listResume.size()]);
     }
 
     @Override
     public int size() {
-        return resumeList.size();
+        return listResume.size();
     }
 }
