@@ -24,22 +24,22 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected void doUpdate(Resume resume, Integer searchKey) {
-        listResume.set(searchKey, resume);
+    protected void doUpdate(Resume resume, Object searchKey) {
+        listResume.set((Integer) searchKey, resume);
     }
 
     @Override
-    protected Resume doGet(Integer searchKey) {
-        return listResume.get(searchKey);
+    protected Resume doGet(Object searchKey) {
+        return listResume.get((Integer) searchKey);
     }
 
     @Override
-    protected void doDelete(Integer searchKey) {
-        listResume.remove(searchKey.intValue());
+    protected void doDelete(Object searchKey) {
+        listResume.remove(((Integer) searchKey).intValue());
     }
 
     @Override
-    protected boolean isExist(Integer searchKey) {
+    protected boolean isExist(Object searchKey) {
         return searchKey != null;
     }
 
