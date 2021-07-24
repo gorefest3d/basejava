@@ -10,13 +10,17 @@ import org.junit.Test;
 public abstract class AbstractStorageTest {
     protected Storage storage;
     private static final String UUID_1 = "uuid1";
-    private static final Resume RESUME_1 = new Resume(UUID_1);
+    private static final String NAME_1 = "Name1";
+    private static final Resume RESUME_1 = new Resume(UUID_1, NAME_1);
     private static final String UUID_2 = "uuid2";
-    private static final Resume RESUME_2 = new Resume(UUID_2);
+    private static final String NAME_2 = "Name2";
+    private static final Resume RESUME_2 = new Resume(UUID_2, NAME_2);
     private static final String UUID_3 = "uuid3";
-    private static final Resume RESUME_3 = new Resume(UUID_3);
+    private static final String NAME_3 = "Name3";
+    private static final Resume RESUME_3 = new Resume(UUID_3, NAME_3);
     private static final String UUID_4 = "uuid4";
-    private static final Resume RESUME_4 = new Resume(UUID_4);
+    private static final String NAME_4 = "Name4";
+    private static final Resume RESUME_4 = new Resume(UUID_4, NAME_4);
 
     protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -38,9 +42,9 @@ public abstract class AbstractStorageTest {
     @Test
     public void getAll() {
         Resume[] expectedResumes = new Resume[3];
-        expectedResumes[0] = new Resume(UUID_1);
-        expectedResumes[1] = new Resume(UUID_2);
-        expectedResumes[2] = new Resume(UUID_3);
+        expectedResumes[0] = new Resume(UUID_1, NAME_1);
+        expectedResumes[1] = new Resume(UUID_2, NAME_2);
+        expectedResumes[2] = new Resume(UUID_3, NAME_3);
         Resume[] actualResumes = storage.getAll();
 
         Assert.assertArrayEquals(expectedResumes, actualResumes);
@@ -66,7 +70,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() {
-        Resume newResume = new Resume(UUID_1);
+        Resume newResume = new Resume(UUID_1, NAME_1);
         storage.update(newResume);
         Assert.assertSame(newResume, storage.get(UUID_1));
     }
