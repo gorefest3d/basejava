@@ -45,7 +45,7 @@ public abstract class AbstractStorageTest {
         expectedResumes[0] = new Resume(UUID_1, NAME_1);
         expectedResumes[1] = new Resume(UUID_2, NAME_2);
         expectedResumes[2] = new Resume(UUID_3, NAME_3);
-        Resume[] actualResumes = storage.getAll();
+        Resume[] actualResumes = storage.getAllSorted().toArray(new Resume[3]);
 
         Assert.assertArrayEquals(expectedResumes, actualResumes);
     }
