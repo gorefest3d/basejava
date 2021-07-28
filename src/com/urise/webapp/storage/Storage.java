@@ -11,7 +11,7 @@ public interface Storage {
 
     void clear();
 
-   void save(Resume resume);
+    void save(Resume resume);
 
     void update(Resume resume);
 
