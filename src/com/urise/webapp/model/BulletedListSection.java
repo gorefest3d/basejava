@@ -2,7 +2,7 @@ package com.urise.webapp.model;
 
 import java.util.List;
 
-public class BulletedListSection extends AbstractSection{
+public class BulletedListSection extends AbstractSection {
     private final List<String> bulletedList;
 
     public BulletedListSection(List<String> bulletedList) {

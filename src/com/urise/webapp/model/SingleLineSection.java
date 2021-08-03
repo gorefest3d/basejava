@@ -1,6 +1,6 @@
 package com.urise.webapp.model;
 
-public class SingleLineSection extends AbstractSection{
+public class SingleLineSection extends AbstractSection {
     private final String singleLine;
 
     public SingleLineSection(String singleLine) {
