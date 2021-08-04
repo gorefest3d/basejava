@@ -48,12 +48,6 @@ public class Resume implements Comparable<Resume> {
         sections.forEach((k, v) -> System.out.println(k.getTitle() + ": " + v));
     }
 
-    //    @Override
-//    public String toString() {
-//        return uuid + '(' + fullName + ')';
-//    }
-
-
     @Override
     public String toString() {
         return "Resume{" +
@@ -72,13 +66,17 @@ public class Resume implements Comparable<Resume> {
         Resume resume = (Resume) o;
 
         if (!uuid.equals(resume.uuid)) return false;
-        return fullName.equals(resume.fullName);
+        if (!fullName.equals(resume.fullName)) return false;
+        if (!sections.equals(resume.sections)) return false;
+        return contacts.equals(resume.contacts);
     }
 
     @Override
     public int hashCode() {
         int result = uuid.hashCode();
         result = 31 * result + fullName.hashCode();
+        result = 31 * result + sections.hashCode();
+        result = 31 * result + contacts.hashCode();
         return result;
     }
 
