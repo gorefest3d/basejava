@@ -28,9 +28,40 @@ public class Resume implements Comparable<Resume> {
         return uuid;
     }
 
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void addContact(ContactType contactType, String content) {
+        contacts.put(contactType, content);
+    }
+
+    public void getContacts() {
+        contacts.forEach((k, v) -> System.out.println(k.getTitle() + ": " + v));
+    }
+
+    public void addSection(SectionType sectionType, AbstractSection abstractSection) {
+        sections.put(sectionType, abstractSection);
+    }
+
+    public void getSections() {
+        sections.forEach((k, v) -> System.out.println(k.getTitle() + ": " + v));
+    }
+
+    //    @Override
+//    public String toString() {
+//        return uuid + '(' + fullName + ')';
+//    }
+
+
     @Override
     public String toString() {
-        return uuid + '(' + fullName + ')';
+        return "Resume{" +
+                "uuid='" + uuid + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", sections=" + sections +
+                ", contacts=" + contacts +
+                '}';
     }
 
     @Override

@@ -28,8 +28,6 @@ public class SingleLineSection extends AbstractSection {
 
     @Override
     public String toString() {
-        return "SingleLineSection{" +
-                "singleLine='" + singleLine + '\'' +
-                '}';
+        return singleLine;
     }
 }

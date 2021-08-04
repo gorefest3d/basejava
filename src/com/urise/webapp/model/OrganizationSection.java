@@ -1,5 +1,6 @@
 package com.urise.webapp.model;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class OrganizationSection extends AbstractSection {
@@ -7,6 +8,10 @@ public class OrganizationSection extends AbstractSection {
 
     public OrganizationSection(List<Organization> organizations) {
         this.organizations = organizations;
+    }
+
+    public OrganizationSection(Organization... organizationItem) {
+        this(Arrays.asList(organizationItem));
     }
 
     public List<Organization> getOrganizations() {
@@ -30,8 +35,6 @@ public class OrganizationSection extends AbstractSection {
 
     @Override
     public String toString() {
-        return "OrganizationSection{" +
-                "organizations=" + organizations +
-                '}';
+        return organizations.toString();
     }
 }

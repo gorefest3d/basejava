@@ -1,5 +1,6 @@
 package com.urise.webapp.model;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class BulletedListSection extends AbstractSection {
@@ -8,6 +9,10 @@ public class BulletedListSection extends AbstractSection {
     public BulletedListSection(List<String> bulletedList) {
         this.bulletedList = bulletedList;
     }
+
+    public BulletedListSection(String... listItem){
+        this(Arrays.asList(listItem));
+        }
 
     public List<String> getBulletedList() {
         return bulletedList;
@@ -30,8 +35,6 @@ public class BulletedListSection extends AbstractSection {
 
     @Override
     public String toString() {
-        return "BulletedListSection{" +
-                "bulletedList=" + bulletedList +
-                '}';
+        return bulletedList.toString();
     }
 }
