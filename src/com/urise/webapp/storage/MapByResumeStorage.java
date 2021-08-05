@@ -11,7 +11,7 @@ public class MapByResumeStorage extends AbstractStorage<Resume> {
     private Map<String, Resume> mapResume = new HashMap<>();
 
     @Override
-    protected void doSave(Resume resume) {
+    protected void doSave(Resume resume, Resume searchResume) {
         mapResume.put(resume.getUuid(), resume);
     }
 

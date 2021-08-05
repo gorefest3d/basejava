@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 public abstract class AbstractStorage<SK> implements Storage {
     private static final Logger LOG = Logger.getLogger(AbstractStorage.class.getName());
 
-    protected abstract void doSave(Resume resume);
+    protected abstract void doSave(Resume resume, SK searchkey);
 
     protected abstract SK getSearchKey(String uuid);
 
@@ -28,7 +28,7 @@ public abstract class AbstractStorage<SK> implements Storage {
     public void save(Resume resume) {
         LOG.info("Save" + resume);
         SK searchKey = getNotExistSearchKey(resume.getUuid());
-        doSave(resume);
+        doSave(resume, searchKey);
     }
 
     public void update(Resume resume) {

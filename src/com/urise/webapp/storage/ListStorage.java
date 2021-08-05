@@ -9,7 +9,7 @@ public class ListStorage extends AbstractStorage<Integer> {
     private List<Resume> listResume = new ArrayList<>();
 
     @Override
-    protected void doSave(Resume resume) {
+    protected void doSave(Resume resume, Integer searchkey) {
         listResume.add(resume);
     }
 
