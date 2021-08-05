@@ -1,43 +1,51 @@
 package com.urise.webapp.model;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class Organization {
     private final String title;
     private final String homePage;
-    private final String position;
-    private final String description;
-    private final LocalDate startDate;
-    private final LocalDate endDate;
+    private List<Position> positions = new ArrayList<>();
 
-    public Organization(String title, String homePage, String position, String description, LocalDate startDate, LocalDate endDate) {
+    public Organization(String title, String homePage, List<Position> positions) {
         this.title = title;
         this.homePage = homePage;
-        this.position = position;
-        this.description = description;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.positions = positions;
+    }
+
+    public Organization(String title, String homePage, Position... positions) {
+        this(title, homePage, Arrays.asList(positions));
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Organization that = (Organization) o;
-        return title.equals(that.title) && Objects.equals(homePage, that.homePage) && position.equals(that.position) && Objects.equals(description, that.description) && startDate.equals(that.startDate) && endDate.equals(that.endDate);
+
+        if (!Objects.equals(title, that.title)) return false;
+        if (!Objects.equals(homePage, that.homePage)) return false;
+        return Objects.equals(positions, that.positions);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, homePage, position, description, startDate, endDate);
+        int result = title != null ? title.hashCode() : 0;
+        result = 31 * result + (homePage != null ? homePage.hashCode() : 0);
+        result = 31 * result + (positions != null ? positions.hashCode() : 0);
+        return result;
     }
 
     @Override
     public String toString() {
-        return  "\n" + "\n" + startDate + " - " + endDate +
-                "\n" + title +  "\n" +
-                position +  "\n" +
-                description + "\n";
+        return "Organization{" +
+                "title='" + title + '\'' +
+                ", homePage='" + homePage + '\'' +
+                ", positions=" + positions +
+                '}';
     }
 }

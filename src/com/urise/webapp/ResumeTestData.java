@@ -1,8 +1,9 @@
 package com.urise.webapp;
 
 import com.urise.webapp.model.*;
+import com.urise.webapp.util.DateUtil;
 
-import java.time.LocalDate;
+import java.time.Month;
 
 public class ResumeTestData {
     public static void main(String[] args) {
@@ -31,13 +32,13 @@ public class ResumeTestData {
                 "Languages: Java, Scala, Python/Jython/PL-Python, JavaScript, Groovy",
                 "Родной русский, английский \"upper intermediate\""));
         resumeOne.addSection(SectionType.EXPERIENCE, new OrganizationSection(new Organization(
-                "Java Online Projects", "Java", "Автор проекта.", "Создание, организация и проведение Java онлайн проектов и стажировок.", LocalDate.of(2013, 10, 1), LocalDate.of(2021, 8, 12)),
+                "Java Online Projects", "Java", new Position("Автор проекта.", "Создание, организация и проведение Java онлайн проектов и стажировок.", DateUtil.of(2010, Month.JANUARY), DateUtil.of(2021, Month.AUGUST))),
                 new Organization(
-                        "Wrike", "Wrike", "Старший разработчик.", "Проектирование и разработка онлайн платформы.", LocalDate.of(2014, 10, 1), LocalDate.of(2016, 1, 1)),
-                new Organization("RIT Center", "RIT Center", "Java архитектор.", "Организация процесса разработки системы ERP.", LocalDate.of(2012, 4, 1), LocalDate.of(2014, 10, 1))));
+                        "Wrike", "Wrike", new Position("Старший разработчик.", "Проектирование и разработка онлайн платформы.", DateUtil.of(2014, Month.OCTOBER), DateUtil.of(2016, Month.JANUARY))),
+                new Organization("RIT Center", "RIT Center", new Position("Java архитектор.", "Организация процесса разработки системы ERP.", DateUtil.of(2012, Month.APRIL), DateUtil.of(2014, Month.OCTOBER)))));
         resumeOne.addSection(SectionType.EDUCATION, new OrganizationSection(new Organization(
-                "Coursera", "Coursera", "Functional Programming Principles in Scala\" by Martin Odersky", "", LocalDate.of(2013, 3, 1), LocalDate.of(2013, 5, 1)),
-                new Organization("Luxoft", "Luxoft", "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"", "", LocalDate.of(2011, 3, 1), LocalDate.of(2011, 4, 1))));
+                "Coursera", "Coursera", new Position("Functional Programming Principles in Scala\" by Martin Odersky", null, DateUtil.of(2013, Month.MARCH), DateUtil.of(2013, Month.MAY))),
+                new Organization("Luxoft", "Luxoft", new Position("Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"", null, DateUtil.of(2011, Month.MARCH), DateUtil.of(2011, Month.APRIL)))));
 
         System.out.println(resumeOne.getFullName());
         System.out.println();
