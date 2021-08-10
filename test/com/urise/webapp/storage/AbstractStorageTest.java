@@ -13,21 +13,18 @@ import java.util.List;
 
 public abstract class AbstractStorageTest {
     protected Storage storage;
-    private static final ResumeTestData data = new ResumeTestData();
     private static final String UUID_1 = "uuid1";
     private static final String NAME_1 = "Name1";
-    private static final Resume RESUME_1 = data.createResume(UUID_1, NAME_1);
+    private static final Resume RESUME_1 = ResumeTestData.createResume(UUID_1, NAME_1);
     private static final String UUID_2 = "uuid2";
     private static final String NAME_2 = "Name2";
-    private static final Resume RESUME_2 = data.createResume(UUID_2, NAME_2);
+    private static final Resume RESUME_2 = ResumeTestData.createResume(UUID_2, NAME_2);
     private static final String UUID_3 = "uuid3";
     private static final String NAME_3 = "Name3";
-    private static final Resume RESUME_3 = data.createResume(UUID_3, NAME_3);
+    private static final Resume RESUME_3 = ResumeTestData.createResume(UUID_3, NAME_3);
     private static final String UUID_4 = "uuid4";
     private static final String NAME_4 = "Name4";
-    private static final Resume RESUME_4 = data.createResume(UUID_4, NAME_4);
-
-
+    private static final Resume RESUME_4 = ResumeTestData.createResume(UUID_4, NAME_4);
 
     protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -50,7 +47,7 @@ public abstract class AbstractStorageTest {
     public void getAllSorted() {
         List<Resume> listResume = storage.getAllSorted();
         Assert.assertEquals(3, listResume.size());
-        Assert.assertEquals(listResume, Arrays.asList(RESUME_1, RESUME_2, RESUME_3));
+        Assert.assertEquals(Arrays.asList(RESUME_1, RESUME_2, RESUME_3), listResume);
     }
 
     @Test

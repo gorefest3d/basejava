@@ -11,7 +11,7 @@ public class ArrayStorage extends AbstractArrayStorage {
         storage[size] = resume;
     }
 
-    protected int getIndex(String uuid) {
+    protected Integer getSearchKey(String uuid) {
         int index = -1;
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
@@ -23,6 +23,6 @@ public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected void fillAfterDelete(int index) {
-       System.arraycopy(storage, index + 1, storage, index, size - (index + 1));
+       storage[index] = storage[size - 1];
     }
 }

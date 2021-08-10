@@ -6,7 +6,7 @@ import com.urise.webapp.util.DateUtil;
 import java.time.Month;
 
 public class ResumeTestData {
-    public Resume createResume(String uuid, String fullName){
+    public static Resume createResume(String uuid, String fullName){
         Resume resume = new Resume(uuid, fullName);
         resume.addContact(ContactType.MOBILE_HONE, "+7(921) 855-0482");
         resume.addContact(ContactType.SKYPE, "grigory.kislin");

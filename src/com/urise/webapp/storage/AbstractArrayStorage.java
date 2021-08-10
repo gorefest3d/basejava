@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Array based storage for Resumes
  */
-public abstract class AbstractArrayStorage implements Storage {
+public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     protected static final int STORAGE_LIMIT = 10_000;
     protected int size;
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
@@ -20,12 +20,8 @@ public abstract class AbstractArrayStorage implements Storage {
         return size;
     }
 
-    public Resume[] getAll() {
-        return Arrays.copyOf(storage, size);
-    }
-
     @Override
-    public List<Resume> getAllSorted() {
+    public List<Resume> doCopyAllResumes() {
         return Arrays.asList(Arrays.copyOfRange(storage, 0, size));
     }
 
@@ -34,9 +30,9 @@ public abstract class AbstractArrayStorage implements Storage {
         size = 0;
     }
 
-    public void save(Resume resume) {
+    @Override
+    public void doSave(Resume resume, Integer index) {
         if (size < STORAGE_LIMIT) {
-            int index = getIndex(resume.getUuid());
             if (index < 0) {
                 insertResume(resume, index);
                 size++;
@@ -48,8 +44,8 @@ public abstract class AbstractArrayStorage implements Storage {
         }
     }
 
-    public void update(Resume resume) {
-        int index = getIndex(resume.getUuid());
+    @Override
+    public void doUpdate(Resume resume, Integer index) {
         if (index >= 0) {
             storage[index] = resume;
         } else {
@@ -57,26 +53,26 @@ public abstract class AbstractArrayStorage implements Storage {
         }
     }
 
-    public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index >= 0) {
-            return storage[index];
-        }
-        throw new NotExistStorageException(uuid);
+    @Override
+    public Resume doGet(Integer index) {
+        return storage[index];
     }
 
-    public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index >= 0) {
-            if (size - (index + 1) >= 0)
-                fillAfterDelete(index);
-            size--;
-        } else {
-            throw new NotExistStorageException(uuid);
-        }
+    @Override
+    public void doDelete(Integer index) {
+        fillAfterDelete(index);
+        storage[size - 1] = null;
+        size--;
+    }
+
+    @Override
+    protected boolean isExist(Integer index) {
+        return index >= 0;
     }
 
     protected abstract void insertResume(Resume resume, int index);
-    protected abstract int getIndex(String uuid);
+
+    protected abstract Integer getSearchKey(String uuid);
+
     protected abstract void fillAfterDelete(int index);
 }

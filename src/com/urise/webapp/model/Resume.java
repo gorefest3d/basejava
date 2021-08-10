@@ -36,16 +36,16 @@ public class Resume implements Comparable<Resume> {
         contacts.put(contactType, content);
     }
 
-    public void getContacts() {
-        contacts.forEach((k, v) -> System.out.println(k.getTitle() + ": " + v));
+    public String getContacts(ContactType contactType) {
+        return contacts.get(contactType);
     }
 
     public void addSection(SectionType sectionType, AbstractSection abstractSection) {
         sections.put(sectionType, abstractSection);
     }
 
-    public void getSections() {
-        sections.forEach((k, v) -> System.out.println(k.getTitle() + ": " + v));
+    public SectionType getSections(SectionType sectionType) {
+        return sectionType;
     }
 
     @Override
