@@ -1,7 +1,5 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.exception.ExistStorageException;
-import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
@@ -33,24 +31,16 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     @Override
     public void doSave(Resume resume, Integer index) {
         if (size < STORAGE_LIMIT) {
-            if (index < 0) {
-                insertResume(resume, index);
-                size++;
+            insertResume(resume, index);
+            size++;
             } else {
-                throw new ExistStorageException(resume.getUuid());
-            }
-        } else {
             throw new StorageException("БД переполнена", resume.getUuid());
         }
     }
 
     @Override
     public void doUpdate(Resume resume, Integer index) {
-        if (index >= 0) {
-            storage[index] = resume;
-        } else {
-            throw new NotExistStorageException(resume.getUuid());
-        }
+        storage[index] = resume;
     }
 
     @Override

@@ -44,8 +44,8 @@ public class Resume implements Comparable<Resume> {
         sections.put(sectionType, abstractSection);
     }
 
-    public SectionType getSections(SectionType sectionType) {
-        return sectionType;
+    public AbstractSection getSections(SectionType sectionType) {
+        return sections.get(sectionType);
     }
 
     @Override

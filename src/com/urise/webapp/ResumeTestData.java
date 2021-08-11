@@ -5,6 +5,8 @@ import com.urise.webapp.util.DateUtil;
 
 import java.time.Month;
 
+import static com.urise.webapp.model.SectionType.OBJECTIVE;
+
 public class ResumeTestData {
     public static Resume createResume(String uuid, String fullName){
         Resume resume = new Resume(uuid, fullName);
@@ -15,7 +17,7 @@ public class ResumeTestData {
         resume.addContact(ContactType.GITHUB, "Профиль GitHub");
         resume.addContact(ContactType.STACKOVERFLOW, "Профиль Stackoverflow");
         resume.addContact(ContactType.HOME_PAGE, "Домашняя страница");
-        resume.addSection(SectionType.OBJECTIVE, new SingleLineSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
+        resume.addSection(OBJECTIVE, new SingleLineSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
         resume.addSection(SectionType.PERSONAL, new SingleLineSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
         resume.addSection(SectionType.ACHIEVEMENT, new BulletedListSection(
                 "С 2013 года: разработка проектов \"Разработка Web приложения\",\"Java Enterprise\", \"Многомодульный maven.\"",
@@ -39,5 +41,9 @@ public class ResumeTestData {
                 "Coursera", "Coursera", new Position("Functional Programming Principles in Scala\" by Martin Odersky", null, DateUtil.of(2013, Month.MARCH), DateUtil.of(2013, Month.MAY))),
                 new Organization("Luxoft", "Luxoft", new Position("Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"", null, DateUtil.of(2011, Month.MARCH), DateUtil.of(2011, Month.APRIL)))));
         return resume;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(createResume("UUID_1", "NAME_1"));
     }
 }
