@@ -32,14 +32,16 @@ public class ResumeTestData {
                 "MySQL, SQLite, MS SQL, HSQLDB",
                 "Languages: Java, Scala, Python/Jython/PL-Python, JavaScript, Groovy",
                 "Родной русский, английский \"upper intermediate\""));
-        resume.addSection(SectionType.EXPERIENCE, new OrganizationSection(new Organization(
-                "Java Online Projects", "Java", new Position("Автор проекта.", "Создание, организация и проведение Java онлайн проектов и стажировок.", DateUtil.of(2010, Month.JANUARY), DateUtil.of(2021, Month.AUGUST))),
+        resume.addSection(SectionType.EXPERIENCE, new OrganizationSection(
                 new Organization(
-                        "Wrike", "Wrike", new Position("Старший разработчик.", "Проектирование и разработка онлайн платформы.", DateUtil.of(2014, Month.OCTOBER), DateUtil.of(2016, Month.JANUARY))),
-                new Organization("RIT Center", "RIT Center", new Position("Java архитектор.", "Организация процесса разработки системы ERP.", DateUtil.of(2012, Month.APRIL), DateUtil.of(2014, Month.OCTOBER)))));
+                        "Java Online Projects", "Java",
+                new Organization.Position("Автор проекта.", "Создание, организация и проведение Java онлайн проектов и стажировок.", DateUtil.of(2010, Month.JANUARY), DateUtil.of(2021, Month.AUGUST))),
+                new Organization(
+                        "Wrike", "Wrike", new Organization.Position("Старший разработчик.", "Проектирование и разработка онлайн платформы.", DateUtil.of(2014, Month.OCTOBER), DateUtil.of(2016, Month.JANUARY))),
+                new Organization("RIT Center", "RIT Center", new Organization.Position("Java архитектор.", "Организация процесса разработки системы ERP.", DateUtil.of(2012, Month.APRIL), DateUtil.of(2014, Month.OCTOBER)))));
         resume.addSection(SectionType.EDUCATION, new OrganizationSection(new Organization(
-                "Coursera", "Coursera", new Position("Functional Programming Principles in Scala\" by Martin Odersky", null, DateUtil.of(2013, Month.MARCH), DateUtil.of(2013, Month.MAY))),
-                new Organization("Luxoft", "Luxoft", new Position("Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"", null, DateUtil.of(2011, Month.MARCH), DateUtil.of(2011, Month.APRIL)))));
+                "Coursera", "Coursera", new Organization.Position("Functional Programming Principles in Scala\" by Martin Odersky", null, DateUtil.of(2013, Month.MARCH), DateUtil.of(2013, Month.MAY))),
+                new Organization("Luxoft", "Luxoft", new Organization.Position("Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"", null, DateUtil.of(2011, Month.MARCH), DateUtil.of(2011, Month.APRIL)))));
         return resume;
     }
 
