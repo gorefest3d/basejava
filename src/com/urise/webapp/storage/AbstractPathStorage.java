@@ -21,7 +21,7 @@ public class AbstractPathStorage extends AbstractStorage<Path> {
     protected AbstractPathStorage(String dir, Serialize serialize) {
         this.serialize = serialize;
         directory = Paths.get(dir);
-        Objects.requireNonNull(directory, "directory must not be null");
+        Objects.requireNonNull(dir, "directory must not be null");
         if (!Files.isDirectory(directory) || !Files.isWritable(directory)) {
             throw new IllegalArgumentException(dir + " is not directory");
         }
