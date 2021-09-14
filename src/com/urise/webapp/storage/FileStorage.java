@@ -2,17 +2,18 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
+import com.urise.webapp.storage.serialize.Serialize;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class AbstractFileStorage extends AbstractStorage<File> {
+public class FileStorage extends AbstractStorage<File> {
     private File directory;
     private Serialize serialize;
 
-    protected AbstractFileStorage(File directory, Serialize serialize) {
+    protected FileStorage(File directory, Serialize serialize) {
         this.serialize = serialize;
         Objects.requireNonNull(directory, "directory must not be null");
         if (!directory.isDirectory()) {
@@ -28,10 +29,10 @@ public class AbstractFileStorage extends AbstractStorage<File> {
     protected void doSave(Resume resume, File file) {
         try {
             file.createNewFile();
-            serialize.doWrite(resume, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
         }
+        doUpdate(resume, file);
     }
 
     @Override
@@ -59,7 +60,9 @@ public class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     protected void doDelete(File file) {
-        file.delete();
+        if (!file.delete()) {
+            throw new StorageException("File delete error", file.getName());
+        }
     }
 
     @Override
@@ -69,10 +72,8 @@ public class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     protected List<Resume> doCopyAllResumes() {
-        File[] files = directory.listFiles();
-        List<Resume> list = new ArrayList<>(files.length);
-
-        for (File file : files) {
+        List<Resume> list = new ArrayList<>(existDirectory().length);
+        for (File file : existDirectory()) {
             list.add(doGet(file));
         }
         return list;
@@ -80,16 +81,21 @@ public class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     public void clear() {
-        File[] files = directory.listFiles();
-
-        for (File file : files) {
+        for (File file : existDirectory()) {
             doDelete(file);
         }
     }
 
     @Override
     public int size() {
+        return existDirectory().length;
+    }
+
+    public File[] existDirectory() {
         File[] files = directory.listFiles();
-        return files.length;
+        if (files == null) {
+            throw new StorageException("Directory read error");
+        }
+        return files;
     }
 }

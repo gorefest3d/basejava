@@ -2,6 +2,7 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
+import com.urise.webapp.storage.serialize.Serialize;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -14,11 +15,11 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class AbstractPathStorage extends AbstractStorage<Path> {
+public class PathStorage extends AbstractStorage<Path> {
     private Path directory;
     private Serialize serialize;
 
-    protected AbstractPathStorage(String dir, Serialize serialize) {
+    protected PathStorage(String dir, Serialize serialize) {
         this.serialize = serialize;
         directory = Paths.get(dir);
         Objects.requireNonNull(dir, "directory must not be null");
@@ -31,10 +32,10 @@ public class AbstractPathStorage extends AbstractStorage<Path> {
     protected void doSave(Resume resume, Path path) {
         try {
             Files.createFile(path);
-            serialize.doWrite(resume, new BufferedOutputStream(Files.newOutputStream(path)));
         } catch (IOException e) {
             throw new StorageException("Cant create path", getFileName(path), e);
         }
+        doUpdate(resume, path);
     }
 
     @Override
@@ -76,36 +77,28 @@ public class AbstractPathStorage extends AbstractStorage<Path> {
 
     @Override
     protected List<Resume> doCopyAllResumes() {
-        try {
-            return getPathStream().map(this::doGet).collect(Collectors.toList());
-        } catch (IOException e) {
-            throw new StorageException("All files read error", e);
-        }
+        return getPathStream().map(this::doGet).collect(Collectors.toList());
     }
 
     @Override
     public void clear() {
-        try {
-            getPathStream().forEach(this::doDelete);
-        } catch (IOException e) {
-            throw new StorageException("Path delete error", null, e);
-        }
+        getPathStream().forEach(this::doDelete);
     }
 
     @Override
     public int size() {
-        try {
-            return (int) getPathStream().count();
-        } catch (IOException e) {
-            throw new StorageException("Path read error", null, e);
-        }
+        return (int) getPathStream().count();
     }
 
     private String getFileName(Path path) {
         return path.getFileName().toString();
     }
 
-    private Stream<Path> getPathStream() throws IOException {
-        return Files.list(directory);
+    private Stream<Path> getPathStream() {
+        try {
+            return Files.list(directory);
+        } catch (IOException e) {
+            throw new StorageException("Directory read error", e);
+        }
     }
 }
