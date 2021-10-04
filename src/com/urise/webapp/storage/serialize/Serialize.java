@@ -9,5 +9,5 @@ import java.io.OutputStream;
 public interface Serialize {
     void doWrite(Resume resume, OutputStream os) throws IOException;
 
-    Resume doRead(InputStream os) throws IOException;
+    Resume doRead(InputStream is) throws IOException;
 }
