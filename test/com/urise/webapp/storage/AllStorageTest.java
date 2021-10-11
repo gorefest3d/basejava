@@ -1,6 +1,5 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.storage.serialize.JsonStreamSerializer;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -14,7 +13,7 @@ import org.junit.runners.Suite;
         ObjectPathStorageTest.class,
         ObjectStreamStorageTest.class,
         XmlPathStorageTest.class,
-        JsonStreamSerializer.class
+        JsonPathStorageTest.class
 })
 public class AllStorageTest {
 }
