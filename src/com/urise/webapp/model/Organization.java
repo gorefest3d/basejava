@@ -30,6 +30,14 @@ public class Organization implements Serializable {
         this(new Link(name, url), Arrays.asList(positions));
     }
 
+    public Link getHomePage() {
+        return homePage;
+    }
+
+    public List<Position> getPositions() {
+        return positions;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -74,7 +82,7 @@ public class Organization implements Serializable {
             Objects.requireNonNull(endDate, "endDate must not be null");
             Objects.requireNonNull(position, "position must not be null");
             this.position = position;
-            this.description = description;
+            this.description = description == null ? "" : description;
             this.startDate = startDate;
             this.endDate = endDate;
         }
