@@ -13,15 +13,14 @@ public class DataStreamSerializer implements Serialize {
     @Override
     public void doWrite(Resume resume, OutputStream os) throws IOException {
         try (DataOutputStream dos = new DataOutputStream(os)) {
-            Map<ContactType, String> contacts = resume.getContacts();
             dos.writeUTF(resume.getUuid());
             dos.writeUTF(resume.getFullName());
-            dos.writeInt(contacts.size());
+            Map<ContactType, String> contacts = resume.getContacts();
 
-            for (Map.Entry<ContactType, String> entry : contacts.entrySet()) {
+            writeCollection(dos, contacts.entrySet(), entry -> {
                 dos.writeUTF(entry.getKey().name());
                 dos.writeUTF(entry.getValue());
-            }
+            });
 
             writeCollection(dos, resume.getSections().entrySet(), entry -> {
                 SectionType sectionType = entry.getKey();
@@ -40,8 +39,9 @@ public class DataStreamSerializer implements Serialize {
                     case EXPERIENCE:
                     case EDUCATION:
                         writeCollection(dos, ((OrganizationSection) section).getOrganizations(), organization -> {
-                            dos.writeUTF(organization.getHomePage().getName());
-                            dos.writeUTF(organization.getHomePage().getUrl());
+                            Link homePage = organization.getHomePage();
+                            dos.writeUTF(homePage.getName());
+                            dos.writeUTF(homePage.getUrl());
 
                             writeCollection(dos, organization.getPositions(), position -> {
                                 dos.writeUTF(position.getPosition());
@@ -49,7 +49,6 @@ public class DataStreamSerializer implements Serialize {
                                 writeLocalDate(dos, position.getStartDate());
                                 writeLocalDate(dos, position.getEndDate());
                             });
-
                         });
                         break;
                 }
