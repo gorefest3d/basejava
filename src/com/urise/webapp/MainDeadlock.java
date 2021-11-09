@@ -11,23 +11,20 @@ public class MainDeadlock {
 
     private static void deadLock(Object one, Object two) {
         new Thread(() -> {
-            System.out.println(getThreadName() + " Waiting " + one);
+            String threadName = Thread.currentThread().getName();
+            System.out.println(threadName + " Waiting " + one);
             synchronized (one) {
-                System.out.println(getThreadName() + " Holding " + one);
+                System.out.println(threadName + " Holding " + one);
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                System.out.println(getThreadName() + " Waiting " + two);
+                System.out.println(threadName + " Waiting " + two);
                 synchronized (two) {
-                    System.out.println(getThreadName() + " Holding " + two);
+                    System.out.println(threadName + " Holding " + two);
                 }
             }
         }).start();
-    }
-
-    private static String getThreadName() {
-        return Thread.currentThread().getName();
     }
 }
