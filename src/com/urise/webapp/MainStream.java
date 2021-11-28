@@ -9,7 +9,7 @@ public class MainStream {
     public static String minValue(int[] values) {
         return IntStream.of(values)
                 .distinct().sorted()
-                .mapToObj(i -> Integer.toString(i)).collect(Collectors.joining());
+                .mapToObj(Integer::toString).collect(Collectors.joining());
     }
 
     public static List<Integer> oddOrEven(List<Integer> integers) {
