@@ -14,9 +14,10 @@ public class MainStream {
     }
 
     public static List<Integer> oddOrEven(List<Integer> integers) {
-        int sum = integers.stream().mapToInt(Integer::intValue).sum();
-        return sum % 2 != 0 ? integers.stream().filter(i -> i % 2 != 0)
-                .collect(Collectors.toList()) : integers.stream().filter(i -> i % 2 == 0)
+        return integers.stream().mapToInt(numb -> numb).sum() % 2 != 0 ?
+                integers.stream().filter(i -> i % 2 != 0)
+                        .collect(Collectors.toList())
+                : integers.stream().filter(i -> i % 2 == 0)
                 .collect(Collectors.toList());
     }
 
