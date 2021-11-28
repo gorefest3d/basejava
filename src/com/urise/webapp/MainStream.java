@@ -8,7 +8,8 @@ import java.util.stream.IntStream;
 public class MainStream {
     public static String minValue(int[] values) {
         return IntStream.of(values)
-                .distinct().sorted()
+                .distinct()
+                .sorted()
                 .mapToObj(Integer::toString).collect(Collectors.joining());
     }
 
